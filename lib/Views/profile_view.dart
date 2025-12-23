@@ -22,7 +22,9 @@ class ProfileView extends StatelessWidget {
         ),
         centerTitle: true,
         backgroundColor: AppColors.primary,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(
+          color: AppColors.background, // 👈 Back button color
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),

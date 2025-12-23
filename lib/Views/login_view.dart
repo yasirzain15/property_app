@@ -24,7 +24,7 @@ class LoginView extends StatelessWidget {
               /// Title
               Center(
                 child: Column(
-                  children: const [
+                  children: [
                     Text(
                       "Sign In",
                       style: TextStyle(
@@ -33,9 +33,9 @@ class LoginView extends StatelessWidget {
                         color: AppColors.primary,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
-                      "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum.",
+                      "Own it. Rent it. Sell it.\nAll your property needs, one tap away.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
@@ -49,7 +49,10 @@ class LoginView extends StatelessWidget {
               const SizedBox(height: 40),
 
               /// Email
-              const CustomTextField(hint: "Email address"),
+              const CustomTextField(
+                hint: "Email address",
+                icon: Icons.email, // ✅ Added prefix icon
+              ),
 
               const SizedBox(height: 16),
 
@@ -57,6 +60,7 @@ class LoginView extends StatelessWidget {
               CustomTextField(
                 hint: "Password",
                 isPassword: true,
+                icon: Icons.lock, // ✅ Added prefix icon
                 suffixIcon: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.visibility_off),
