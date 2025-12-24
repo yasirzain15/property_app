@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+import 'package:rent_pay/Core/Bindings/notifications_binding.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
 
 // Views
 import 'package:rent_pay/Views/login_view.dart';
 import 'package:rent_pay/Views/home_view.dart';
+import 'package:rent_pay/Views/notifications_view.dart';
 import 'package:rent_pay/Views/property_list_view.dart';
 import 'package:rent_pay/Views/property_detail_view.dart';
 import 'package:rent_pay/Views/settings_view.dart';
@@ -55,6 +57,13 @@ class AppPages {
       name: AppRoutes.profileview,
       page: () => ProfileView(),
       binding: ProfileBinding(),
+    ),
+
+    /// 🔔 NOTIFICATIONS
+    GetPage(
+      name: AppRoutes.notifications,
+      page: () => const NotificationsView(),
+      binding: NotificationsBinding(),
     ),
   ];
 }

@@ -8,4 +8,5 @@ class AppRoutes {
   static const propertyDetail = '/property-detail';
   static const settingssiew = '/settings-view';
   static const profileview = '/profile-view';
+  static const notifications = '/notifications';
 }

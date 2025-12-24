@@ -14,87 +14,89 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "My Profile",
-          style: TextStyle(color: AppColors.background),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "My Profile",
+            style: TextStyle(color: AppColors.background),
+          ),
+          centerTitle: true,
+          backgroundColor: AppColors.primary,
+          iconTheme: IconThemeData(
+            color: AppColors.background, // 👈 Back button color
+          ),
         ),
-        centerTitle: true,
-        backgroundColor: AppColors.primary,
-        iconTheme: IconThemeData(
-          color: AppColors.background, // 👈 Back button color
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            /// 👤 PROFILE IMAGE
-            Obx(
-              () => GestureDetector(
-                onTap: controller.pickProfileImage,
-                child: CircleAvatar(
-                  backgroundColor: AppColors.primary.withOpacity(0.50),
-                  radius: 60,
-                  backgroundImage: controller.profileImage.value.isNotEmpty
-                      ? FileImage(File(controller.profileImage.value))
-                      : const AssetImage('assets/images/profile.png')
-                            as ImageProvider,
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              /// 👤 PROFILE IMAGE
+              Obx(
+                () => GestureDetector(
+                  onTap: controller.pickProfileImage,
+                  child: CircleAvatar(
+                    backgroundColor: AppColors.primary.withOpacity(0.50),
+                    radius: 60,
+                    backgroundImage: controller.profileImage.value.isNotEmpty
+                        ? FileImage(File(controller.profileImage.value))
+                        : const AssetImage('assets/images/profile.png')
+                              as ImageProvider,
+                  ),
                 ),
               ),
-            ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            /// 🧾 FIELDS WITH ICONS
-            _buildTextField(
-              hint: "Name",
-              controller: controller.nameController,
-              icon: Icons.person,
-            ),
-            _buildTextField(
-              hint: "Email",
-              controller: controller.emailController,
-              icon: Icons.email,
-            ),
-            _buildTextField(
-              hint: "CNIC",
-              controller: controller.cnicController,
-              icon: Icons.credit_card,
-            ),
-            _buildTextField(
-              hint: "Phone Number",
-              controller: controller.phoneController,
-              icon: Icons.phone,
-            ),
+              /// 🧾 FIELDS WITH ICONS
+              _buildTextField(
+                hint: "Name",
+                controller: controller.nameController,
+                icon: Icons.person,
+              ),
+              _buildTextField(
+                hint: "Email",
+                controller: controller.emailController,
+                icon: Icons.email,
+              ),
+              _buildTextField(
+                hint: "CNIC",
+                controller: controller.cnicController,
+                icon: Icons.credit_card,
+              ),
+              _buildTextField(
+                hint: "Phone Number",
+                controller: controller.phoneController,
+                icon: Icons.phone,
+              ),
 
-            const SizedBox(height: 10),
+              const SizedBox(height: 10),
 
-            /// 🚻 GENDER
-            _buildGenderSelector(),
+              /// 🚻 GENDER
+              _buildGenderSelector(),
 
-            /// 📅 DOB
-            _buildDateOfBirthField(context),
+              /// 📅 DOB
+              _buildDateOfBirthField(context),
 
-            const SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-            /// 🔘 UPDATE BUTTON
-            ElevatedButton(
-              onPressed: controller.updateProfile,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                minimumSize: const Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+              /// 🔘 UPDATE BUTTON
+              ElevatedButton(
+                onPressed: controller.updateProfile,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  "Update",
+                  style: TextStyle(color: AppColors.background),
                 ),
               ),
-              child: const Text(
-                "Update",
-                style: TextStyle(color: AppColors.background),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -39,8 +39,8 @@ class CustomBottomNav extends StatelessWidget {
           children: [
             _navItem(CupertinoIcons.home, 0),
             _navItem(CupertinoIcons.list_bullet, 1), // ✅ SAME AS BEFORE
-            _navItem(CupertinoIcons.chat_bubble_2, 2),
-            _navItem(CupertinoIcons.person_alt, 3),
+            _navItem(Icons.notifications_none_outlined, 2),
+            _navItem(CupertinoIcons.person_alt_circle, 3),
           ],
         ),
       ),

@@ -8,8 +8,11 @@ import 'package:rent_pay/Core/Routes/app_routes.dart';
 import 'package:rent_pay/Widgets/custom_bottom_nav.dart';
 import 'package:rent_pay/Widgets/property_card.dart';
 import 'package:rent_pay/Widgets/search_bar_widget.dart';
+
+// Screens
 import 'property_list_view.dart';
 import 'settings_view.dart';
+import 'notifications_view.dart'; // ✅ ADD THIS
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
@@ -18,67 +21,62 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-
-      /// Bottom Navigation
-      bottomNavigationBar: Obx(
-        () => CustomBottomNav(
-          currentIndex: navController.currentIndex.value,
-          onTap: navController.changeIndex,
-        ),
-      ),
-
-      /// Screen switching
-      body: Obx(() {
-        switch (navController.currentIndex.value) {
-          case 0:
-            return _homeContent();
-          case 1:
-            return PropertyListView();
-          case 2:
-            return const Center(
-              child: Text(
-                "Coming Soon...",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            );
-          case 3:
-            return const SettingsView();
-          default:
-            return _homeContent();
-        }
-      }),
-    );
-  }
-
-  Widget _homeContent() {
     return SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _header(),
-            const SizedBox(height: 24),
-            _exploreCard(),
-            const SizedBox(height: 30),
-            _searchField(),
-            const SizedBox(height: 24),
-            _propertyGrid(),
-          ],
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+
+        /// 🔻 Bottom Navigation
+        bottomNavigationBar: Obx(
+          () => CustomBottomNav(
+            currentIndex: navController.currentIndex.value,
+            onTap: navController.changeIndex,
+          ),
         ),
+
+        /// 🔄 Screen Switching
+        body: Obx(() {
+          switch (navController.currentIndex.value) {
+            case 0:
+              return _homeContent();
+            case 1:
+              return PropertyListView();
+            case 2:
+              return const NotificationsView(); // ✅ NOTIFICATIONS
+            case 3:
+              return const SettingsView();
+            default:
+              return _homeContent();
+          }
+        }),
       ),
     );
   }
 
-  /// ---------------- HEADER ----------------
+  // ================= HOME CONTENT =================
+  Widget _homeContent() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _header(),
+          const SizedBox(height: 24),
+          _exploreCard(),
+          const SizedBox(height: 30),
+          _searchField(),
+          const SizedBox(height: 24),
+          _propertyGrid(),
+        ],
+      ),
+    );
+  }
+
+  // ================= HEADER =================
   Widget _header() {
     return Row(
       children: [
         GestureDetector(
           onTap: () {
-            // Optional: can navigate to settings directly from avatar too
             Get.toNamed(AppRoutes.settingssiew);
           },
           child: const CircleAvatar(
@@ -92,11 +90,22 @@ class HomeView extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         const Spacer(),
-        Icon(Icons.notifications_none, color: AppColors.textSecondary),
+
+        /// 🔔 Notification Icon (syncs with bottom nav)
+        GestureDetector(
+          onTap: () {
+            navController.changeIndex(2);
+          },
+          child: const Icon(
+            Icons.notifications_none,
+            color: AppColors.textSecondary,
+          ),
+        ),
       ],
     );
   }
 
+  // ================= EXPLORE CARD =================
   Widget _exploreCard() {
     return Container(
       height: 160,
@@ -131,10 +140,12 @@ class HomeView extends StatelessWidget {
     );
   }
 
+  // ================= SEARCH =================
   Widget _searchField() {
     return const SearchBarWidget(hint: "Address, city, zip");
   }
 
+  // ================= PROPERTY GRID =================
   Widget _propertyGrid() {
     final List<Map<String, String>> properties = [
       {
