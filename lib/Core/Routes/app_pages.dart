@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
+import 'package:rent_pay/Core/Bindings/installment_bindings.dart';
 import 'package:rent_pay/Core/Bindings/notifications_binding.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
 
 // Views
 import 'package:rent_pay/Views/login_view.dart';
 import 'package:rent_pay/Views/home_view.dart';
+import 'package:rent_pay/Views/installment_view.dart';
 import 'package:rent_pay/Views/notifications_view.dart';
 import 'package:rent_pay/Views/property_list_view.dart';
 import 'package:rent_pay/Views/property_detail_view.dart';
@@ -59,7 +61,14 @@ class AppPages {
       binding: ProfileBinding(),
     ),
 
-    /// 🔔 NOTIFICATIONS
+    /// 🔔 INSTALLMENTS
+    GetPage(
+      name: AppRoutes.installments,
+      page: () => const InstallmentView(),
+      binding: InstallmentBindings(),
+    ),
+
+    ///NOTIFICATIONS
     GetPage(
       name: AppRoutes.notifications,
       page: () => const NotificationsView(),

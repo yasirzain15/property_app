@@ -15,14 +15,19 @@ class SettingsView extends StatelessWidget {
         'title': 'My Profile',
         'onTap': () => Get.toNamed(AppRoutes.profileview),
       },
-      {'icon': Icons.info, 'title': 'About Us', 'onTap': () {}},
-      {'icon': Icons.lock, 'title': 'Privacy Policy', 'onTap': () {}},
+      {
+        'icon': Icons.install_mobile,
+        'title': 'Installments',
+        'onTap': () => Get.toNamed(AppRoutes.installments),
+      },
+      {'icon': Icons.language, 'title': 'Languages', 'onTap': () {}},
       {
         'icon': Icons.description,
         'title': 'Terms & Conditions',
         'onTap': () {},
       },
-      {'icon': Icons.language, 'title': 'Languages', 'onTap': () {}},
+      {'icon': Icons.lock, 'title': 'Privacy Policy', 'onTap': () {}},
+      {'icon': Icons.info, 'title': 'About Us', 'onTap': () {}},
     ];
 
     return SafeArea(

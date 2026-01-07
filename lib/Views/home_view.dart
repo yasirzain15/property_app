@@ -5,6 +5,7 @@ import 'package:rent_pay/Core/Constants/colors.dart';
 import 'package:rent_pay/Core/Constants/app_assets.dart';
 import 'package:rent_pay/Controller/bottom_nav_controller.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
+import 'package:rent_pay/Views/notifications_view.dart';
 import 'package:rent_pay/Widgets/custom_bottom_nav.dart';
 import 'package:rent_pay/Widgets/property_card.dart';
 import 'package:rent_pay/Widgets/search_bar_widget.dart';
@@ -12,7 +13,6 @@ import 'package:rent_pay/Widgets/search_bar_widget.dart';
 // Screens
 import 'property_list_view.dart';
 import 'settings_view.dart';
-import 'notifications_view.dart'; // ✅ ADD THIS
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});

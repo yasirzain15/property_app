@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rent_pay/Controller/notifications_controller.dart';
+import 'package:rent_pay/Controller/installment_controller.dart';
 import 'package:rent_pay/Core/Constants/colors.dart';
 import 'package:rent_pay/Core/Constants/app_assets.dart';
 
@@ -24,7 +24,7 @@ class InstallmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<NotificationsController>();
+    final controller = Get.find<InstallmentController>();
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),

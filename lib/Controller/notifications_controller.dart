@@ -1,11 +1,8 @@
 import 'package:get/get.dart';
 
 class NotificationsController extends GetxController {
+  /// Later you can connect API here
   void markAllRead() {
-    // later: API / local logic
-  }
-
-  void payNow() {
-    // later: payment logic
+    // TODO: API or local logic
   }
 }
