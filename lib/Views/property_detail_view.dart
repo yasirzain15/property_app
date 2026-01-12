@@ -25,174 +25,190 @@ class PropertyDetailView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Stack(
-        children: [
-          /// 🔹 MAIN IMAGE
-          SizedBox(
-            height: imageHeight,
-            width: double.infinity,
-            child: Image.asset(images.first, fit: BoxFit.cover),
-          ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            /// 🔹 MAIN IMAGE
+            SizedBox(
+              height: imageHeight,
+              width: double.infinity,
+              child: Image.asset(images.first, fit: BoxFit.cover),
+            ),
 
-          /// 🔹 TOP ACTION ICONS
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: Row(
-                children: [
-                  _iconButton(icon: Icons.arrow_back, onTap: () => Get.back()),
-                  const Spacer(),
-                  _iconButton(icon: Icons.share, onTap: () {}),
-                  const SizedBox(width: 12),
-                  _iconButton(icon: Icons.favorite_border, onTap: () {}),
-                ],
+            /// 🔹 TOP ACTION ICONS
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+                child: Row(
+                  children: [
+                    _iconButton(
+                      icon: Icons.arrow_back,
+                      onTap: () => Get.back(),
+                    ),
+                    const Spacer(),
+                    _iconButton(icon: Icons.share, onTap: () {}),
+                    const SizedBox(width: 12),
+                    _iconButton(icon: Icons.favorite_border, onTap: () {}),
+                  ],
+                ),
               ),
             ),
-          ),
 
-          /// 🔹 DETAILS CARD
-          DraggableScrollableSheet(
-            initialChildSize:
-                (MediaQuery.of(context).size.height - imageHeight + 60) /
-                MediaQuery.of(context).size.height,
-            minChildSize:
-                (MediaQuery.of(context).size.height - imageHeight + 60) /
-                MediaQuery.of(context).size.height,
-            maxChildSize: 1.0,
-            builder: (context, scrollController) {
-              return Container(
-                padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  color: AppColors.background,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(26)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    /// 🔹 IMAGE THUMBNAILS
-                    SizedBox(
-                      height: 70,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: images.length,
-                        separatorBuilder: (_, __) => const SizedBox(width: 10),
-                        itemBuilder: (_, index) => ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            images[index],
-                            width: 90,
-                            fit: BoxFit.cover,
+            /// 🔹 DETAILS CARD
+            DraggableScrollableSheet(
+              initialChildSize:
+                  (MediaQuery.of(context).size.height - imageHeight + 60) /
+                  MediaQuery.of(context).size.height,
+              minChildSize:
+                  (MediaQuery.of(context).size.height - imageHeight + 60) /
+                  MediaQuery.of(context).size.height,
+              maxChildSize: 1.0,
+              builder: (context, scrollController) {
+                return Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                    color: AppColors.background,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(26),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// 🔹 IMAGE THUMBNAILS
+                      SizedBox(
+                        height: 70,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: images.length,
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(width: 10),
+                          itemBuilder: (_, index) => ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              images[index],
+                              width: 90,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
-                    /// 🔹 SCROLLABLE DETAILS
-                    Expanded(
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            /// 🔹 PRICE ROW
-                            Row(
-                              children: [
-                                Text(
-                                  price,
-                                  style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                      /// 🔹 SCROLLABLE DETAILS
+                      Expanded(
+                        child: SingleChildScrollView(
+                          controller: scrollController,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              /// 🔹 PRICE ROW
+                              Row(
+                                children: [
+                                  Text(
+                                    price,
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
                                   ),
+                                  const SizedBox(width: 12),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Text(
+                                      "Price cut",
+                                      style: TextStyle(
+                                        color: AppColors.background,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+
+                              /// 🔹 PROPERTY FEATURES
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  _InfoItem(
+                                    icon: Icons.bathtub_outlined,
+                                    text: "2 baths",
+                                  ),
+                                  _InfoItem(
+                                    icon: Icons.bed_outlined,
+                                    text: "2 beds",
+                                  ),
+                                  _InfoItem(
+                                    icon: Icons.square_foot_outlined,
+                                    text: "1,000 sqft",
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+
+                              /// 🔹 TITLE / ADDRESS
+                              Text(
+                                title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 18,
                                 ),
-                                const SizedBox(width: 12),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 4,
+                              ),
+                              const SizedBox(height: 4),
+                              const Text(
+                                "Location from API",
+                                style: TextStyle(
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+
+                              /// 🔹 SCHEDULE TOUR BUTTON
+                              SizedBox(
+                                width: double.infinity,
+                                height: 50,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primary,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
                                   ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primary,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
+                                  onPressed: () {},
                                   child: const Text(
-                                    "Price cut",
+                                    "Schedule Tour",
                                     style: TextStyle(
                                       color: AppColors.background,
-                                      fontSize: 12,
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-
-                            /// 🔹 PROPERTY FEATURES
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                _InfoItem(
-                                  icon: Icons.bathtub_outlined,
-                                  text: "2 baths",
-                                ),
-                                _InfoItem(
-                                  icon: Icons.bed_outlined,
-                                  text: "2 beds",
-                                ),
-                                _InfoItem(
-                                  icon: Icons.square_foot_outlined,
-                                  text: "1,000 sqft",
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-
-                            /// 🔹 TITLE / ADDRESS
-                            Text(
-                              title,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 18,
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            const Text(
-                              "Location from API",
-                              style: TextStyle(color: AppColors.textSecondary),
-                            ),
-                            const SizedBox(height: 20),
-
-                            /// 🔹 SCHEDULE TOUR BUTTON
-                            SizedBox(
-                              width: double.infinity,
-                              height: 50,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primary,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Text(
-                                  "Schedule Tour",
-                                  style: TextStyle(color: AppColors.background),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                          ],
+                              const SizedBox(height: 20),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
 
       /// 🔹 BOTTOM ACTION BAR

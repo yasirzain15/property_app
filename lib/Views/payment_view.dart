@@ -13,20 +13,17 @@ class PaymentView extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<PaymentController>();
 
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
         backgroundColor: AppColors.background,
-        appBar: AppBar(
-          backgroundColor: AppColors.background,
-          elevation: 0,
-          leading: const BackButton(color: AppColors.black),
-          title: const Text(
-            "Payment",
-            style: TextStyle(color: AppColors.black),
-          ),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
+        elevation: 0,
+        leading: const BackButton(color: AppColors.black),
+        title: const Text("Payment", style: TextStyle(color: AppColors.black)),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

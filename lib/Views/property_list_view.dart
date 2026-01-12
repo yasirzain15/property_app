@@ -5,74 +5,82 @@ import '../Controller/property_controller.dart';
 import '../Widgets/property_list_card.dart';
 import '../Widgets/search_bar_widget.dart';
 import '../Core/Routes/app_routes.dart';
+import '../Core/Constants/colors.dart';
 
 class PropertyListView extends StatelessWidget {
   PropertyListView({super.key});
 
-  /// 🔮 Controller (already injected via Bindings)
+  /// 🔮 Controller (Injected via Binding)
   final PropertyController controller = Get.find<PropertyController>();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /// Screen Title
-            const Text(
-              "All Properties",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-
-            const SizedBox(height: 16),
-
-            /// 🔍 SEARCH BAR (API READY)
-            SearchBarWidget(
-              hint: "Search by location, city, zip",
-              onChanged: (value) {
-                // 🔮 Future:
-                // controller.searchProperties(value);
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            /// 🏠 PROPERTY LIST
-            Expanded(
-              child: Obx(
-                () => ListView.separated(
-                  itemCount: controller.properties.length, // 🔮 API length
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
-                  itemBuilder: (context, index) {
-                    final item = controller.properties[index];
-
-                    return GestureDetector(
-                      onTap: () {
-                        /// 🔮 NAVIGATION TO DETAIL SCREEN
-                        Get.toNamed(
-                          AppRoutes.propertyDetail,
-                          arguments: {
-                            'title': item.title, // 🔮 API field
-                            'price': item.price, // 🔮 API field
-                            'images': item.image, // 🔮 API image list
-                          },
-                        );
-                      },
-
-                      /// 🧩 PROPERTY CARD
-                      child: PropertyListCard(
-                        image: item.image, // 🔮 API image
-                        price: item.price, // 🔮 API price
-                        title: item.title, // 🔮 API title
-                      ),
-                    );
-                  },
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// ================= TITLE =================
+              const Text(
+                "All Properties",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
                 ),
               ),
-            ),
-          ],
+
+              const SizedBox(height: 16),
+
+              /// ================= SEARCH =================
+              SearchBarWidget(
+                hint: "Search by location, city, zip",
+                onChanged: (value) {
+                  // 🔮 Future API search
+                  // controller.searchProperties(value);
+                },
+              ),
+
+              const SizedBox(height: 20),
+
+              /// ================= PROPERTY LIST =================
+              Expanded(
+                child: Obx(
+                  () => ListView.separated(
+                    itemCount: controller.properties.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 16),
+                    itemBuilder: (context, index) {
+                      final item = controller.properties[index];
+
+                      return GestureDetector(
+                        onTap: () {
+                          /// 🔮 Navigate to detail screen
+                          Get.toNamed(
+                            AppRoutes.propertyDetail,
+                            arguments: {
+                              'title': item.title,
+                              'price': item.price,
+                              'images': item.image,
+                            },
+                          );
+                        },
+
+                        /// 🧩 CARD
+                        child: PropertyListCard(
+                          image: item.image,
+                          price: item.price,
+                          title: item.title,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

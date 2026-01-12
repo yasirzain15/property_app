@@ -14,20 +14,20 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "My Profile",
-            style: TextStyle(color: AppColors.background),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.primary,
-          iconTheme: IconThemeData(
-            color: AppColors.background, // 👈 Back button color
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "My Profile",
+          style: TextStyle(color: AppColors.background),
         ),
-        body: SingleChildScrollView(
+        centerTitle: true,
+        backgroundColor: AppColors.primary,
+        iconTheme: IconThemeData(
+          color: AppColors.background, // 👈 Back button color
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [

@@ -29,33 +29,35 @@ class NotificationsView extends GetView<NotificationsController> {
         ],
       ),
 
-      body: ListView(
-        children: const [
-          FbNotificationTile(
-            icon: Icons.payment,
-            iconBg: Colors.green,
-            title: "Payment received.",
-            description: "Your rent payment was successful.",
-            time: "2 minutes ago",
-            isUnread: true,
-          ),
-          FbNotificationTile(
-            icon: Icons.home,
-            iconBg: Colors.blue,
-            title: "New property added.",
-            description: "A new rental is available near you.",
-            time: "1 hour ago",
-            isUnread: true,
-          ),
-          Divider(),
-          FbNotificationTile(
-            icon: Icons.notifications,
-            iconBg: Colors.orange,
-            title: "Reminder.",
-            description: "Your installment is due tomorrow.",
-            time: "Yesterday",
-          ),
-        ],
+      body: SafeArea(
+        child: ListView(
+          children: const [
+            FbNotificationTile(
+              icon: Icons.payment,
+              iconBg: Colors.green,
+              title: "Payment received.",
+              description: "Your rent payment was successful.",
+              time: "2 minutes ago",
+              isUnread: true,
+            ),
+            FbNotificationTile(
+              icon: Icons.home,
+              iconBg: Colors.blue,
+              title: "New property added.",
+              description: "A new rental is available near you.",
+              time: "1 hour ago",
+              isUnread: true,
+            ),
+            Divider(),
+            FbNotificationTile(
+              icon: Icons.notifications,
+              iconBg: Colors.orange,
+              title: "Reminder.",
+              description: "Your installment is due tomorrow.",
+              time: "Yesterday",
+            ),
+          ],
+        ),
       ),
     );
   }

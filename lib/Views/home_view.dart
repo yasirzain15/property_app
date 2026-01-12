@@ -21,20 +21,20 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.background,
+    return Scaffold(
+      backgroundColor: AppColors.background,
 
-        /// 🔻 Bottom Navigation
-        bottomNavigationBar: Obx(
-          () => CustomBottomNav(
-            currentIndex: navController.currentIndex.value,
-            onTap: navController.changeIndex,
-          ),
+      /// 🔻 Bottom Navigation
+      bottomNavigationBar: Obx(
+        () => CustomBottomNav(
+          currentIndex: navController.currentIndex.value,
+          onTap: navController.changeIndex,
         ),
+      ),
 
-        /// 🔄 Screen Switching
-        body: Obx(() {
+      /// 🔄 Screen Switching
+      body: SafeArea(
+        child: Obx(() {
           switch (navController.currentIndex.value) {
             case 0:
               return _homeContent();

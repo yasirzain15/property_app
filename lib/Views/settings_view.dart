@@ -34,17 +34,17 @@ class SettingsView extends StatelessWidget {
       {'icon': Icons.info, 'title': 'About Us', 'onTap': () {}},
     ];
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Settings',
-            style: TextStyle(color: AppColors.background),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.primary,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Settings',
+          style: TextStyle(color: AppColors.background),
         ),
-        body: Column(
+        centerTitle: true,
+        backgroundColor: AppColors.primary,
+      ),
+      body: SafeArea(
+        child: Column(
           children: [
             const SizedBox(height: 40),
             Center(

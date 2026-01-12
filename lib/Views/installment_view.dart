@@ -42,30 +42,32 @@ class InstallmentView extends GetView<InstallmentController> {
       ),
 
       /// 📋 BODY
-      body: ListView(
-        padding: const EdgeInsets.only(bottom: 16),
-        children: const [
-          SectionHeader(title: "Upcoming Installments"),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.only(bottom: 16),
+          children: const [
+            SectionHeader(title: "Upcoming Installments"),
 
-          InstallmentCard(
-            propertyName: "Springdale Heights",
-            installmentAmount: "\$2,700",
-            dueDate: "Jan 5, 2026",
-            daysLeft: 12,
-            installmentNumber: "3 of 12",
-            isUrgent: true,
-          ),
+            InstallmentCard(
+              propertyName: "Springdale Heights",
+              installmentAmount: "\$2,700",
+              dueDate: "Jan 5, 2026",
+              daysLeft: 12,
+              installmentNumber: "3 of 12",
+              isUrgent: true,
+            ),
 
-          SectionHeader(title: "Earlier"),
+            SectionHeader(title: "Earlier"),
 
-          NotificationCard(
-            icon: Icons.check_circle,
-            iconColor: Colors.green,
-            title: "Payment Successful",
-            description: "Your installment was processed successfully.",
-            time: "2 days ago",
-          ),
-        ],
+            NotificationCard(
+              icon: Icons.check_circle,
+              iconColor: Colors.green,
+              title: "Payment Successful",
+              description: "Your installment was processed successfully.",
+              time: "2 days ago",
+            ),
+          ],
+        ),
       ),
     );
   }
