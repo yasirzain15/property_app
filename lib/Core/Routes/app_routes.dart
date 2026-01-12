@@ -10,4 +10,6 @@ class AppRoutes {
   static const profileview = '/profile-view';
   static const installments = '/installments';
   static const notifications = '/notifications';
+  static const payment = '/payment';
+  static const paymentSuccess = '/payment-success';
 }

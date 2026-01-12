@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:rent_pay/Core/Bindings/installment_bindings.dart';
 import 'package:rent_pay/Core/Bindings/notifications_binding.dart';
+import 'package:rent_pay/Core/Bindings/payment_binding.dart';
+import 'package:rent_pay/Core/Bindings/payment_success_binding.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
 
 // Views
@@ -8,6 +10,8 @@ import 'package:rent_pay/Views/login_view.dart';
 import 'package:rent_pay/Views/home_view.dart';
 import 'package:rent_pay/Views/installment_view.dart';
 import 'package:rent_pay/Views/notifications_view.dart';
+import 'package:rent_pay/Views/payment_success_view.dart';
+import 'package:rent_pay/Views/payment_view.dart';
 import 'package:rent_pay/Views/property_list_view.dart';
 import 'package:rent_pay/Views/property_detail_view.dart';
 import 'package:rent_pay/Views/settings_view.dart';
@@ -73,6 +77,20 @@ class AppPages {
       name: AppRoutes.notifications,
       page: () => const NotificationsView(),
       binding: NotificationsBinding(),
+    ),
+
+    ///PAYMENTS
+    GetPage(
+      name: AppRoutes.payment,
+      page: () => const PaymentView(),
+      binding: PaymentBinding(),
+    ),
+
+    ///PAYMENT SUCCESS
+    GetPage(
+      name: AppRoutes.paymentSuccess,
+      page: () => const PaymentSuccessView(),
+      binding: PaymentSuccessBinding(),
     ),
   ];
 }

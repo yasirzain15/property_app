@@ -20,7 +20,11 @@ class SettingsView extends StatelessWidget {
         'title': 'Installments',
         'onTap': () => Get.toNamed(AppRoutes.installments),
       },
-      {'icon': Icons.language, 'title': 'Languages', 'onTap': () {}},
+      {
+        'icon': Icons.language,
+        'title': 'Languages',
+        'onTap': () => Get.toNamed(AppRoutes.payment),
+      },
       {
         'icon': Icons.description,
         'title': 'Terms & Conditions',
