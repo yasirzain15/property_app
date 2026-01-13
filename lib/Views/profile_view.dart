@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:rent_pay/Utils/global_loader.dart';
 
 import '../Core/Constants/colors.dart';
 import '../Controller/profile_controller.dart';
@@ -82,7 +83,19 @@ class ProfileView extends StatelessWidget {
 
               /// 🔘 UPDATE BUTTON
               ElevatedButton(
-                onPressed: controller.updateProfile,
+                onPressed: () async {
+                  /// 🌍 Show global loader
+                  GlobalLoader.show();
+
+                  try {
+                    // ⏳ simulate API call or actual update
+                    await Future.delayed(const Duration(seconds: 2));
+                    await controller.updateProfile(); // call your update logic
+                  } finally {
+                    /// 🌍 Hide global loader
+                    GlobalLoader.hide();
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   minimumSize: const Size(double.infinity, 50),

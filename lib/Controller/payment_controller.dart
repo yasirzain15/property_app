@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:rent_pay/Core/Constants/colors.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
+import 'package:rent_pay/Utils/global_loader.dart';
 
 class PaymentController extends GetxController {
   var selectedMethod = 0.obs;
@@ -20,21 +19,22 @@ class PaymentController extends GetxController {
     rememberMe.value = value;
   }
 
-  /// ✅ PAY NOW WITH LOADING
-  void payNow() async {
-    // 🔄 Show loading
-    Get.dialog(
-      const Center(child: CircularProgressIndicator(color: AppColors.primary)),
-      barrierDismissible: false,
-    );
+  /// ✅ PAY NOW WITH GLOBAL LOADER
+  Future<void> payNow() async {
+    try {
+      // 🔄 Show global loader
+      GlobalLoader.show();
 
-    // ⏳ Fake delay (later API)
-    await Future.delayed(const Duration(seconds: 2));
+      // ⏳ Fake API delay (replace with real API later)
+      await Future.delayed(const Duration(seconds: 2));
 
-    // ❌ Close loading
-    Get.back();
-
-    // ✅ Go to success screen
-    Get.toNamed(AppRoutes.paymentSuccess);
+      // ✅ Navigate to payment success
+      Get.toNamed(AppRoutes.paymentSuccess);
+    } catch (e) {
+      Get.snackbar('Error', 'Payment failed');
+    } finally {
+      // ❌ Hide global loader
+      GlobalLoader.hide();
+    }
   }
 }

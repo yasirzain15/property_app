@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rent_pay/Core/Bindings/installment_bindings.dart';
+import 'package:rent_pay/Core/Bindings/login_binding.dart';
 import 'package:rent_pay/Core/Bindings/notifications_binding.dart';
 import 'package:rent_pay/Core/Bindings/payment_binding.dart';
 import 'package:rent_pay/Core/Bindings/payment_success_binding.dart';
@@ -28,7 +29,11 @@ class AppPages {
 
   static final routes = [
     /// 🔐 LOGIN
-    GetPage(name: AppRoutes.login, page: () => const LoginView()),
+    GetPage(
+      name: AppRoutes.login,
+      page: () => LoginView(),
+      binding: LoginBinding(),
+    ),
 
     /// 🏠 HOME
     GetPage(

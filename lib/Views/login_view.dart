@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:rent_pay/Core/Constants/colors.dart';
-import 'package:rent_pay/Core/Routes/app_routes.dart';
+import 'package:rent_pay/Controller/login_controller.dart';
 import 'package:rent_pay/Widgets/custom_button.dart';
 import 'package:rent_pay/Widgets/custom_textfield.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+  LoginView({super.key});
+
+  /// 🔮 Controller (via Binding)
+  final LoginController controller = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +52,7 @@ class LoginView extends StatelessWidget {
               const SizedBox(height: 40),
 
               /// Email
-              const CustomTextField(
-                hint: "Email address",
-                icon: Icons.email, // ✅ Added prefix icon
-              ),
+              const CustomTextField(hint: "Email address", icon: Icons.email),
 
               const SizedBox(height: 16),
 
@@ -60,7 +60,7 @@ class LoginView extends StatelessWidget {
               CustomTextField(
                 hint: "Password",
                 isPassword: true,
-                icon: Icons.lock, // ✅ Added prefix icon
+                icon: Icons.lock,
                 suffixIcon: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.visibility_off),
@@ -69,7 +69,7 @@ class LoginView extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-              /// Forgot password
+              /// Forgot Password
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -81,20 +81,19 @@ class LoginView extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
 
-              /// Login button
+              /// Login Button
               CustomButton(
                 title: "Log In",
                 onTap: () {
-                  // ✅ Route-based navigation
-                  Get.offAllNamed(AppRoutes.home);
+                  controller.login(); // ✅ Global loader will show automatically
                 },
               ),
 
               const Spacer(),
 
-              /// Sign up text
+              /// Sign up
               Center(
                 child: RichText(
                   text: TextSpan(

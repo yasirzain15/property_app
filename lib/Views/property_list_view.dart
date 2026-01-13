@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rent_pay/Utils/global_loader.dart';
 
 import '../Controller/property_controller.dart';
 import '../Widgets/property_list_card.dart';
@@ -56,8 +57,14 @@ class PropertyListView extends StatelessWidget {
                       final item = controller.properties[index];
 
                       return GestureDetector(
-                        onTap: () {
-                          /// 🔮 Navigate to detail screen
+                        onTap: () async {
+                          /// 🌍 Show global loader
+                          GlobalLoader.show();
+
+                          // ⏳ simulate loading / API fetch
+                          await Future.delayed(const Duration(seconds: 1));
+
+                          /// Navigate to property details
                           Get.toNamed(
                             AppRoutes.propertyDetail,
                             arguments: {
@@ -66,6 +73,9 @@ class PropertyListView extends StatelessWidget {
                               'images': item.image,
                             },
                           );
+
+                          /// 🌍 Hide global loader
+                          GlobalLoader.hide();
                         },
 
                         /// 🧩 CARD
