@@ -16,7 +16,7 @@ class PropertyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 180, // 🔥 REQUIRED
+      width: 180, // ✅ REQUIRED for horizontal list
       margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -32,7 +32,7 @@ class PropertyCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// IMAGE
+          /// 🖼 Image
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.asset(
@@ -43,7 +43,7 @@ class PropertyCard extends StatelessWidget {
             ),
           ),
 
-          /// CONTENT
+          /// 📄 Content
           Padding(
             padding: const EdgeInsets.all(12),
             child: Column(

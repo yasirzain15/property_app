@@ -6,9 +6,10 @@ import 'package:rent_pay/Core/Constants/app_assets.dart';
 import 'package:rent_pay/Controller/bottom_nav_controller.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
 import 'package:rent_pay/Views/notifications_view.dart';
+import 'package:rent_pay/Widgets/Dashboard/agency_card.dart';
 import 'package:rent_pay/Widgets/custom_bottom_nav.dart';
-import 'package:rent_pay/Widgets/property_card.dart';
 import 'package:rent_pay/Widgets/search_bar_widget.dart';
+import 'package:rent_pay/Widgets/property_card.dart';
 
 // Screens
 import 'property_list_view.dart';
@@ -41,7 +42,7 @@ class HomeView extends StatelessWidget {
             case 1:
               return PropertyListView();
             case 2:
-              return const NotificationsView(); // ✅ NOTIFICATIONS
+              return const NotificationsView();
             case 3:
               return const SettingsView();
             default:
@@ -64,8 +65,19 @@ class HomeView extends StatelessWidget {
           _exploreCard(),
           const SizedBox(height: 30),
           _searchField(),
-          const SizedBox(height: 24),
-          _propertyGrid(),
+          const SizedBox(height: 30),
+
+          /// 🏢 AGENCIES
+          _sectionTitle("Agencies"),
+          const SizedBox(height: 16),
+          _agencyCarousel(),
+
+          const SizedBox(height: 30),
+
+          /// 🏠 PROPERTIES
+          _sectionTitle("Properties"),
+          const SizedBox(height: 16),
+          _propertyCarousel(),
         ],
       ),
     );
@@ -90,8 +102,6 @@ class HomeView extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         const Spacer(),
-
-        /// 🔔 Notification Icon (syncs with bottom nav)
         GestureDetector(
           onTap: () {
             navController.changeIndex(2);
@@ -145,9 +155,38 @@ class HomeView extends StatelessWidget {
     return const SearchBarWidget(hint: "Address, city, zip");
   }
 
-  // ================= PROPERTY GRID =================
-  Widget _propertyGrid() {
-    final List<Map<String, String>> properties = [
+  // ================= SECTION TITLE =================
+  Widget _sectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    );
+  }
+
+  // ================= AGENCY CAROUSEL =================
+  Widget _agencyCarousel() {
+    final agencies = [
+      {"image": AppAssets.house1, "name": "Prime Estate"},
+      {"image": AppAssets.house2, "name": "Urban Realtors"},
+      {"image": AppAssets.house3, "name": "Luxury Living"},
+    ];
+
+    return SizedBox(
+      height: 170,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: agencies.length,
+        itemBuilder: (context, index) {
+          final agency = agencies[index];
+          return AgencyCard(image: agency["image"]!, name: agency["name"]!);
+        },
+      ),
+    );
+  }
+
+  // ================= PROPERTY CAROUSEL =================
+  Widget _propertyCarousel() {
+    final properties = [
       {
         "image": AppAssets.house1,
         "title": "Springdale Heights",
@@ -163,31 +202,22 @@ class HomeView extends StatelessWidget {
         "title": "Hilltop Terrace",
         "price": "\$2,300,000",
       },
-      {
-        "image": AppAssets.house4,
-        "title": "Riverside Park",
-        "price": "\$2,400,000",
-      },
     ];
 
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: properties.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        childAspectRatio: 0.68,
+    return SizedBox(
+      height: 250,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: properties.length,
+        itemBuilder: (context, index) {
+          final item = properties[index];
+          return PropertyCard(
+            image: item["image"]!,
+            title: item["title"]!,
+            price: item["price"]!,
+          );
+        },
       ),
-      itemBuilder: (context, index) {
-        final item = properties[index];
-        return PropertyCard(
-          image: item["image"]!,
-          title: item["title"]!,
-          price: item["price"]!,
-        );
-      },
     );
   }
 }

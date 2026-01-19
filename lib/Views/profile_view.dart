@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -16,17 +17,29 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /// 🍎 iOS STYLE APP BAR
       appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        centerTitle: true,
+        elevation: 0,
         title: const Text(
           "My Profile",
-          style: TextStyle(color: AppColors.background),
+          style: TextStyle(
+            color: AppColors.background,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-        centerTitle: true,
-        backgroundColor: AppColors.primary,
-        iconTheme: IconThemeData(
-          color: AppColors.background, // 👈 Back button color
+        leading: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => Get.back(),
+          child: const Icon(
+            CupertinoIcons.back,
+            color: AppColors.background,
+            size: 26,
+          ),
         ),
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -37,8 +50,8 @@ class ProfileView extends StatelessWidget {
                 () => GestureDetector(
                   onTap: controller.pickProfileImage,
                   child: CircleAvatar(
-                    backgroundColor: AppColors.primary.withOpacity(0.50),
                     radius: 60,
+                    backgroundColor: AppColors.primary.withOpacity(0.5),
                     backgroundImage: controller.profileImage.value.isNotEmpty
                         ? FileImage(File(controller.profileImage.value))
                         : const AssetImage('assets/images/profile.png')
@@ -47,9 +60,9 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
-              /// 🧾 FIELDS WITH ICONS
+              /// 🧾 INPUT FIELDS
               _buildTextField(
                 hint: "Name",
                 controller: controller.nameController,
@@ -79,33 +92,33 @@ class ProfileView extends StatelessWidget {
               /// 📅 DOB
               _buildDateOfBirthField(context),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 32),
 
-              /// 🔘 UPDATE BUTTON
-              ElevatedButton(
-                onPressed: () async {
-                  /// 🌍 Show global loader
-                  GlobalLoader.show();
-
-                  try {
-                    // ⏳ simulate API call or actual update
-                    await Future.delayed(const Duration(seconds: 2));
-                    await controller.updateProfile(); // call your update logic
-                  } finally {
-                    /// 🌍 Hide global loader
-                    GlobalLoader.hide();
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              /// 🍎 iOS STYLE UPDATE BUTTON
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: CupertinoButton(
+                  borderRadius: BorderRadius.circular(14),
+                  color: AppColors.primary,
+                  padding: EdgeInsets.zero,
+                  onPressed: () async {
+                    GlobalLoader.show();
+                    try {
+                      await Future.delayed(const Duration(seconds: 2));
+                      await controller.updateProfile();
+                    } finally {
+                      GlobalLoader.hide();
+                    }
+                  },
+                  child: const Text(
+                    "Update",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                child: const Text(
-                  "Update",
-                  style: TextStyle(color: AppColors.background),
                 ),
               ),
             ],
@@ -169,7 +182,6 @@ class ProfileView extends StatelessWidget {
               ),
               selected: controller.gender.value == "Male",
               selectedColor: AppColors.primary,
-              backgroundColor: AppColors.background,
               onSelected: (val) {
                 if (val) controller.gender.value = "Male";
               },
@@ -188,7 +200,6 @@ class ProfileView extends StatelessWidget {
               ),
               selected: controller.gender.value == "Female",
               selectedColor: AppColors.primary,
-              backgroundColor: AppColors.background,
               onSelected: (val) {
                 if (val) controller.gender.value = "Female";
               },
@@ -212,10 +223,6 @@ class ProfileView extends StatelessWidget {
             Icons.calendar_today,
             color: AppColors.primary,
           ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: AppColors.border),
@@ -229,7 +236,7 @@ class ProfileView extends StatelessWidget {
           DateTime? picked = await showDatePicker(
             context: context,
             initialDate: controller.dobController.text.isNotEmpty
-                ? DateTime.tryParse(controller.dobController.text)!
+                ? DateTime.tryParse(controller.dobController.text)
                 : DateTime(1990, 1, 1),
             firstDate: DateTime(1900),
             lastDate: DateTime.now(),

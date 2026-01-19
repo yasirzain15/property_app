@@ -5,6 +5,7 @@ import 'package:rent_pay/Widgets/Installments/installment_card.dart';
 import 'package:rent_pay/Widgets/Installments/notification_card.dart';
 import 'package:rent_pay/Widgets/Installments/section_header.dart';
 import 'package:rent_pay/Core/Constants/colors.dart';
+import 'package:flutter/cupertino.dart';
 
 class InstallmentView extends GetView<InstallmentController> {
   const InstallmentView({super.key});
@@ -14,26 +15,31 @@ class InstallmentView extends GetView<InstallmentController> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
 
-      /// 🔔 APP BAR
+      /// 🔔 APP BAR (PROFILE STYLE)
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.primary,
         elevation: 0,
         centerTitle: true,
+
+        /// 🍎 iOS BACK BUTTON
+        leading: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => Get.back(),
+          child: const Icon(CupertinoIcons.back, color: Colors.white, size: 28),
+        ),
+
         title: const Text(
           "Notifications",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back, color: Colors.black),
-        //   onPressed: () => Get.back(),
-        // ),
+
         actions: [
           TextButton(
             onPressed: controller.markAllRead,
             child: const Text(
               "Mark all read",
               style: TextStyle(
-                color: AppColors.primary,
+                color: Colors.white,
                 fontWeight: FontWeight.w500,
               ),
             ),

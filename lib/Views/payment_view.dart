@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rent_pay/Controller/payment_controller.dart';
@@ -15,13 +16,30 @@ class PaymentView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.background,
+
+      /// 🍎 iOS STYLE APP BAR (SAME AS PROFILE)
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.primary,
         elevation: 0,
-        leading: const BackButton(color: AppColors.black),
-        title: const Text("Payment", style: TextStyle(color: AppColors.black)),
         centerTitle: true,
+        title: const Text(
+          "Payment",
+          style: TextStyle(
+            color: AppColors.background,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        leading: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => Get.back(),
+          child: const Icon(
+            CupertinoIcons.back,
+            color: AppColors.background,
+            size: 26,
+          ),
+        ),
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
