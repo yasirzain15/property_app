@@ -17,7 +17,6 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /// 🍎 iOS STYLE APP BAR
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         centerTitle: true,
@@ -62,7 +61,6 @@ class ProfileView extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              /// 🧾 INPUT FIELDS
               _buildTextField(
                 hint: "Name",
                 controller: controller.nameController,
@@ -94,7 +92,7 @@ class ProfileView extends StatelessWidget {
 
               const SizedBox(height: 32),
 
-              /// 🍎 iOS STYLE UPDATE BUTTON
+              /// UPDATE BUTTON
               SizedBox(
                 width: double.infinity,
                 height: 52,
@@ -141,10 +139,6 @@ class ProfileView extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hint,
           prefixIcon: Icon(icon, color: AppColors.primary),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: AppColors.border),
@@ -171,17 +165,20 @@ class ProfileView extends StatelessWidget {
             ),
             const SizedBox(width: 20),
 
+            /// MALE
             ChoiceChip(
               label: Text(
                 "Male",
                 style: TextStyle(
                   color: controller.gender.value == "Male"
                       ? Colors.white
-                      : Colors.black,
+                      : AppColors.primary,
                 ),
               ),
               selected: controller.gender.value == "Male",
               selectedColor: AppColors.primary,
+              backgroundColor: AppColors.background,
+              shape: StadiumBorder(side: BorderSide(color: AppColors.primary)),
               onSelected: (val) {
                 if (val) controller.gender.value = "Male";
               },
@@ -189,17 +186,20 @@ class ProfileView extends StatelessWidget {
 
             const SizedBox(width: 10),
 
+            /// FEMALE
             ChoiceChip(
               label: Text(
                 "Female",
                 style: TextStyle(
                   color: controller.gender.value == "Female"
                       ? Colors.white
-                      : Colors.black,
+                      : AppColors.primary,
                 ),
               ),
               selected: controller.gender.value == "Female",
               selectedColor: AppColors.primary,
+              backgroundColor: AppColors.background,
+              shape: StadiumBorder(side: BorderSide(color: AppColors.primary)),
               onSelected: (val) {
                 if (val) controller.gender.value = "Female";
               },

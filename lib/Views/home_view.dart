@@ -11,6 +11,7 @@ import 'package:rent_pay/Widgets/Dashboard/agency_card.dart';
 import 'package:rent_pay/Widgets/custom_bottom_nav.dart';
 import 'package:rent_pay/Widgets/search_bar_widget.dart';
 import 'package:rent_pay/Widgets/property_card.dart';
+import 'package:rent_pay/Utils/global_loader.dart';
 
 // Screens
 import 'property_list_view.dart';
@@ -54,6 +55,20 @@ class HomeView extends StatelessWidget {
     );
   }
 
+  // ================= NAVIGATE WITH GLOBAL LOADER =================
+  Future<void> _navigateWithLoader(
+    String routeName, {
+    dynamic arguments,
+  }) async {
+    GlobalLoader.show(); // show loader
+    try {
+      await Future.delayed(const Duration(seconds: 1)); // simulate API delay
+      Get.toNamed(routeName, arguments: arguments);
+    } finally {
+      GlobalLoader.hide(); // hide loader
+    }
+  }
+
   // ================= HOME CONTENT =================
   Widget _homeContent() {
     return SingleChildScrollView(
@@ -95,7 +110,7 @@ class HomeView extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Get.toNamed(AppRoutes.settingssiew);
+            navController.changeIndex(3);
           },
           child: const CircleAvatar(
             radius: 22,
@@ -202,6 +217,30 @@ class HomeView extends StatelessWidget {
           ),
         ],
       ),
+      AgencyModel(
+        name: "BridgeFord Properties",
+        image: AppAssets.house4,
+        projects: [
+          PropertyProjectModel(
+            image: AppAssets.house3,
+            title: "BridgeFord Properties",
+            beds: "2 Bed",
+            price: "\$4,100,000",
+          ),
+        ],
+      ),
+      AgencyModel(
+        name: "Westmoor Estates",
+        image: AppAssets.house1,
+        projects: [
+          PropertyProjectModel(
+            image: AppAssets.house2,
+            title: "Westmoor Estates",
+            beds: "3 Bed",
+            price: "\$5,100,000",
+          ),
+        ],
+      ),
     ];
 
     return SizedBox(
@@ -215,7 +254,7 @@ class HomeView extends StatelessWidget {
             image: agency.image,
             name: agency.name,
             onTap: () {
-              Get.toNamed(AppRoutes.agencyDetails, arguments: agency);
+              _navigateWithLoader(AppRoutes.agencyDetails, arguments: agency);
             },
           );
         },
@@ -259,7 +298,7 @@ class HomeView extends StatelessWidget {
             title: item["title"] as String,
             price: item["price"] as String,
             onTap: () {
-              Get.toNamed(
+              _navigateWithLoader(
                 AppRoutes.propertyDetail,
                 arguments: {
                   "title": item["title"],

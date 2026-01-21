@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rent_pay/Core/Routes/app_routes.dart';
 import 'package:rent_pay/Widgets/Dashboard/agency_project_card.dart';
+import 'package:rent_pay/Utils/global_loader.dart';
+
 import '../Controller/agency_details_controller.dart';
 import '../Core/Constants/colors.dart';
 
@@ -65,8 +68,33 @@ class AgencyDetailsView extends StatelessWidget {
                 itemCount: controller.agency.projects.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 16),
                 itemBuilder: (context, index) {
-                  return AgencyProjectCard(
-                    project: controller.agency.projects[index],
+                  final project = controller.agency.projects[index];
+
+                  return GestureDetector(
+                    onTap: () async {
+                      /// 🔄 SHOW LOADER FIRST
+                      GlobalLoader.show();
+
+                      await Future.delayed(const Duration(milliseconds: 800));
+
+                      /// 👉 NAVIGATE
+                      Get.toNamed(
+                        AppRoutes.propertyDetail,
+                        arguments: {
+                          'title': project.title,
+                          'price': project.price,
+                          'images': [
+                            project.image,
+                            project.image,
+                            project.image,
+                          ],
+                        },
+                      );
+
+                      /// ❌ HIDE LOADER AFTER NAVIGATION
+                      GlobalLoader.hide();
+                    },
+                    child: AgencyProjectCard(project: project),
                   );
                 },
               ),

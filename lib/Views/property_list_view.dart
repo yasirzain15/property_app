@@ -56,34 +56,33 @@ class PropertyListView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final item = controller.properties[index];
 
-                      return GestureDetector(
+                      return PropertyListCard(
+                        image: item.image,
+                        price: item.price,
+                        title: item.title,
+
+                        /// 🔹 TAP HANDLER WITH GLOBAL LOADER
                         onTap: () async {
-                          /// 🌍 Show global loader
-                          GlobalLoader.show();
+                          GlobalLoader.show(); // show loader
+                          try {
+                            // simulate API delay
+                            await Future.delayed(const Duration(seconds: 1));
 
-                          // ⏳ simulate loading / API fetch
-                          await Future.delayed(const Duration(seconds: 1));
-
-                          /// Navigate to property details
-                          Get.toNamed(
-                            AppRoutes.propertyDetail,
-                            arguments: {
-                              'title': item.title,
-                              'price': item.price,
-                              'images': item.image,
-                            },
-                          );
-
-                          /// 🌍 Hide global loader
-                          GlobalLoader.hide();
+                            // ✅ Navigate to property details
+                            Get.toNamed(
+                              AppRoutes.propertyDetail,
+                              arguments: {
+                                'title': item.title,
+                                'price': item.price,
+                                'images': [
+                                  item.image,
+                                ], // wrap single image in a list
+                              },
+                            );
+                          } finally {
+                            GlobalLoader.hide(); // hide loader
+                          }
                         },
-
-                        /// 🧩 CARD
-                        child: PropertyListCard(
-                          image: item.image,
-                          price: item.price,
-                          title: item.title,
-                        ),
                       );
                     },
                   ),
