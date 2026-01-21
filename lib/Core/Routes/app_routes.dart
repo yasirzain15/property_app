@@ -12,4 +12,5 @@ class AppRoutes {
   static const notifications = '/notifications';
   static const payment = '/payment';
   static const paymentSuccess = '/payment-success';
+  static const agencyDetails = '/agency-details';
 }

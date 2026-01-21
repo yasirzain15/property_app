@@ -5,6 +5,7 @@ import 'package:rent_pay/Core/Constants/colors.dart';
 import 'package:rent_pay/Core/Constants/app_assets.dart';
 import 'package:rent_pay/Controller/bottom_nav_controller.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
+import 'package:rent_pay/Models/agency_model.dart';
 import 'package:rent_pay/Views/notifications_view.dart';
 import 'package:rent_pay/Widgets/Dashboard/agency_card.dart';
 import 'package:rent_pay/Widgets/custom_bottom_nav.dart';
@@ -76,6 +77,11 @@ class HomeView extends StatelessWidget {
 
           /// 🏠 PROPERTIES
           _sectionTitle("Properties"),
+          const SizedBox(height: 16),
+          _propertyCarousel(),
+
+          ///PROJECTS
+          _sectionTitle("Projects"),
           const SizedBox(height: 16),
           _propertyCarousel(),
         ],
@@ -166,9 +172,36 @@ class HomeView extends StatelessWidget {
   // ================= AGENCY CAROUSEL =================
   Widget _agencyCarousel() {
     final agencies = [
-      {"image": AppAssets.house1, "name": "Prime Estate"},
-      {"image": AppAssets.house2, "name": "Urban Realtors"},
-      {"image": AppAssets.house3, "name": "Luxury Living"},
+      AgencyModel(
+        name: "Prime Estate",
+        image: AppAssets.house1,
+        projects: [
+          PropertyProjectModel(
+            image: AppAssets.house1,
+            title: "Prime Apartments",
+            beds: "2 Bed",
+            price: "\$2,700,000",
+          ),
+          PropertyProjectModel(
+            image: AppAssets.house2,
+            title: "Luxury Heights",
+            beds: "3 Bed",
+            price: "\$3,200,000",
+          ),
+        ],
+      ),
+      AgencyModel(
+        name: "Urban Realtors",
+        image: AppAssets.house2,
+        projects: [
+          PropertyProjectModel(
+            image: AppAssets.house3,
+            title: "Urban Residency",
+            beds: "2 Bed",
+            price: "\$2,100,000",
+          ),
+        ],
+      ),
     ];
 
     return SizedBox(
@@ -178,7 +211,13 @@ class HomeView extends StatelessWidget {
         itemCount: agencies.length,
         itemBuilder: (context, index) {
           final agency = agencies[index];
-          return AgencyCard(image: agency["image"]!, name: agency["name"]!);
+          return AgencyCard(
+            image: agency.image,
+            name: agency.name,
+            onTap: () {
+              Get.toNamed(AppRoutes.agencyDetails, arguments: agency);
+            },
+          );
         },
       ),
     );
@@ -191,16 +230,19 @@ class HomeView extends StatelessWidget {
         "image": AppAssets.house1,
         "title": "Springdale Heights",
         "price": "\$2,700,000",
+        "images": [AppAssets.house1, AppAssets.house2, AppAssets.house3],
       },
       {
         "image": AppAssets.house2,
         "title": "Lakeside View",
         "price": "\$2,890,000",
+        "images": [AppAssets.house2, AppAssets.house3, AppAssets.house4],
       },
       {
         "image": AppAssets.house3,
         "title": "Hilltop Terrace",
         "price": "\$2,300,000",
+        "images": [AppAssets.house3, AppAssets.house1, AppAssets.house4],
       },
     ];
 
@@ -211,10 +253,21 @@ class HomeView extends StatelessWidget {
         itemCount: properties.length,
         itemBuilder: (context, index) {
           final item = properties[index];
+
           return PropertyCard(
-            image: item["image"]!,
-            title: item["title"]!,
-            price: item["price"]!,
+            image: item["image"] as String,
+            title: item["title"] as String,
+            price: item["price"] as String,
+            onTap: () {
+              Get.toNamed(
+                AppRoutes.propertyDetail,
+                arguments: {
+                  "title": item["title"],
+                  "price": item["price"],
+                  "images": item["images"],
+                },
+              );
+            },
           );
         },
       ),

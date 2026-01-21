@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
+import 'package:rent_pay/Core/Bindings/agency_details_binding.dart';
 import 'package:rent_pay/Core/Bindings/installment_bindings.dart';
 import 'package:rent_pay/Core/Bindings/login_binding.dart';
 import 'package:rent_pay/Core/Bindings/notifications_binding.dart';
 import 'package:rent_pay/Core/Bindings/payment_binding.dart';
 import 'package:rent_pay/Core/Bindings/payment_success_binding.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
+import 'package:rent_pay/Views/agency_details_view.dart';
 
 // Views
 import 'package:rent_pay/Views/login_view.dart';
@@ -96,6 +98,13 @@ class AppPages {
       name: AppRoutes.paymentSuccess,
       page: () => const PaymentSuccessView(),
       binding: PaymentSuccessBinding(),
+    ),
+
+    ///AGENCY DETAILS
+    GetPage(
+      name: AppRoutes.agencyDetails,
+      page: () => AgencyDetailsView(),
+      binding: AgencyDetailsBinding(),
     ),
   ];
 }
