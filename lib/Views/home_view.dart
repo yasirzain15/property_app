@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:rent_pay/Core/Constants/colors.dart';
 import 'package:rent_pay/Core/Constants/app_assets.dart';
 import 'package:rent_pay/Controller/bottom_nav_controller.dart';
+import 'package:rent_pay/Core/Constants/ui_constants.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
 import 'package:rent_pay/Models/agency_model.dart';
 import 'package:rent_pay/Views/notifications_view.dart';
@@ -70,6 +71,7 @@ class HomeView extends StatelessWidget {
   }
 
   // ================= HOME CONTENT =================
+  // ================= HOME CONTENT =================
   Widget _homeContent() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -95,9 +97,12 @@ class HomeView extends StatelessWidget {
           const SizedBox(height: 16),
           _propertyCarousel(),
 
+          const SizedBox(
+            height: 30,
+          ), // ✅ Added spacing between properties and projects
           ///PROJECTS
           _sectionTitle("Projects"),
-          const SizedBox(height: 16),
+          const SizedBox(height: 16), // ✅ Adjusted spacing for consistency
           _propertyCarousel(),
         ],
       ),
@@ -243,19 +248,33 @@ class HomeView extends StatelessWidget {
       ),
     ];
 
+    final screenWidth = Get.width;
+    final cardWidth = screenWidth * 0.6; // card width 60% of screen for peek
+
     return SizedBox(
       height: 170,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: agencies.length,
+        padding: const EdgeInsets.only(left: 0, right: 16),
         itemBuilder: (context, index) {
           final agency = agencies[index];
-          return AgencyCard(
-            image: agency.image,
-            name: agency.name,
-            onTap: () {
-              _navigateWithLoader(AppRoutes.agencyDetails, arguments: agency);
-            },
+          return Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: SizedBox(
+              width: cardWidth,
+              child: AgencyCard(
+                activeProjects: agency.projects.length,
+                image: agency.image,
+                name: agency.name,
+                onTap: () {
+                  _navigateWithLoader(
+                    AppRoutes.agencyDetails,
+                    arguments: agency,
+                  );
+                },
+              ),
+            ),
           );
         },
       ),
@@ -268,45 +287,51 @@ class HomeView extends StatelessWidget {
       {
         "image": AppAssets.house1,
         "title": "Springdale Heights",
+        "beds": "3 Bed",
         "price": "\$2,700,000",
-        "images": [AppAssets.house1, AppAssets.house2, AppAssets.house3],
       },
       {
         "image": AppAssets.house2,
         "title": "Lakeside View",
+        "beds": "2 Bed",
         "price": "\$2,890,000",
-        "images": [AppAssets.house2, AppAssets.house3, AppAssets.house4],
       },
       {
         "image": AppAssets.house3,
         "title": "Hilltop Terrace",
+        "beds": "4 Bed",
         "price": "\$2,300,000",
-        "images": [AppAssets.house3, AppAssets.house1, AppAssets.house4],
       },
     ];
 
+    final screenWidth = Get.width;
+    final cardWidth = screenWidth * 0.6; // 60% of screen width for peek
+
     return SizedBox(
-      height: 250,
+      height: kCardHeight,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: properties.length,
+        padding: const EdgeInsets.only(left: 0, right: 16),
         itemBuilder: (context, index) {
           final item = properties[index];
-
-          return PropertyCard(
-            image: item["image"] as String,
-            title: item["title"] as String,
-            price: item["price"] as String,
-            onTap: () {
-              _navigateWithLoader(
-                AppRoutes.propertyDetail,
-                arguments: {
-                  "title": item["title"],
-                  "price": item["price"],
-                  "images": item["images"],
+          return Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: SizedBox(
+              width: cardWidth,
+              child: PropertyCard(
+                image: item["image"]!,
+                title: item["title"]!,
+                beds: item["beds"]!,
+                price: item["price"]!,
+                onTap: () {
+                  _navigateWithLoader(
+                    AppRoutes.propertyDetail,
+                    arguments: item,
+                  );
                 },
-              );
-            },
+              ),
+            ),
           );
         },
       ),

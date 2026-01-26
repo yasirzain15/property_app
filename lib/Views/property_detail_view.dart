@@ -243,14 +243,17 @@ class PropertyDetailView extends StatelessWidget {
             const Spacer(),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.black),
+                side: BorderSide(color: AppColors.primary),
                 foregroundColor: Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
                 ),
               ),
               onPressed: () {},
-              child: const Text("Request Info"),
+              child: Text(
+                "Request Info",
+                style: TextStyle(color: AppColors.primary),
+              ),
             ),
           ],
         ),

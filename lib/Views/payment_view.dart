@@ -6,6 +6,7 @@ import 'package:rent_pay/Core/Constants/colors.dart';
 import 'package:rent_pay/Widgets/Payment/payment_method_card.dart';
 import 'package:rent_pay/Widgets/Payment/payment_input_field.dart';
 import 'package:rent_pay/Widgets/Payment/payment_plans.dart';
+import 'package:rent_pay/Widgets/common_app_bar.dart';
 
 class PaymentView extends StatelessWidget {
   const PaymentView({super.key});
@@ -18,27 +19,7 @@ class PaymentView extends StatelessWidget {
       backgroundColor: AppColors.background,
 
       /// 🍎 iOS STYLE APP BAR (SAME AS PROFILE)
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          "Payment",
-          style: TextStyle(
-            color: AppColors.background,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        leading: CupertinoButton(
-          padding: EdgeInsets.zero,
-          onPressed: () => Get.back(),
-          child: const Icon(
-            CupertinoIcons.back,
-            color: AppColors.background,
-            size: 26,
-          ),
-        ),
-      ),
+      appBar: const CommonAppBar(title: "Payment", showBack: true),
 
       body: SafeArea(
         child: SingleChildScrollView(

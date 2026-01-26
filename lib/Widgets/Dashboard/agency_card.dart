@@ -1,61 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:rent_pay/Core/Constants/colors.dart';
+import 'package:rent_pay/Core/Constants/ui_constants.dart';
 
 class AgencyCard extends StatelessWidget {
   final String image;
   final String name;
+  final int activeProjects;
   final VoidCallback onTap;
 
   const AgencyCard({
     super.key,
     required this.image,
     required this.name,
+    required this.activeProjects,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 160,
-        margin: const EdgeInsets.only(right: 12),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 6,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
+    return SizedBox(
+      width: kCardWidth, // ✅ SAME AS PROPERTY CARD
+      height: kCardHeight, // ✅ SAME HEIGHT
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14), // ✅ SAME RADIUS
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// Image
+            /// IMAGE
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(16),
-              ),
+              borderRadius: BorderRadius.circular(14), // ✅ SAME
               child: Image.asset(
                 image,
-                height: 110,
+                height: kImageHeight, // ✅ SAME IMAGE HEIGHT
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
 
-            /// Name
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
-              ),
+            const SizedBox(height: 6),
+
+            /// NAME
+            Text(
+              name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+            ),
+
+            /// ACTIVE PROJECTS
+            Text(
+              "Active Projects\n$activeProjects",
+              style: const TextStyle(fontSize: 12, color: AppColors.primary),
             ),
           ],
         ),

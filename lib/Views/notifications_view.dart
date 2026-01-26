@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rent_pay/Core/Constants/colors.dart';
 import 'package:rent_pay/Controller/notifications_controller.dart';
 import 'package:rent_pay/Widgets/Notifications/fb_notification_tile.dart';
+import 'package:rent_pay/Widgets/common_app_bar.dart';
 
 class NotificationsView extends GetView<NotificationsController> {
   const NotificationsView({super.key});
@@ -11,13 +12,8 @@ class NotificationsView extends GetView<NotificationsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        title: const Text(
-          "Notifications",
-          style: TextStyle(color: AppColors.background),
-        ),
-
+      appBar: CommonAppBar(
+        title: "Notifications",
         actions: [
           TextButton(
             onPressed: controller.markAllRead,

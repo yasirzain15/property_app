@@ -65,7 +65,7 @@ class PropertyListCard extends StatelessWidget {
                       title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: AppColors.textSecondary),
+                      style: const TextStyle(color: AppColors.primary),
                     ),
                   ],
                 ),

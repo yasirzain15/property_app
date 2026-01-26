@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
+import 'package:rent_pay/Widgets/common_app_bar.dart';
 import '../Core/Constants/colors.dart';
 import '../Core/Constants/app_assets.dart';
 
@@ -35,14 +36,7 @@ class SettingsView extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Settings',
-          style: TextStyle(color: AppColors.background),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primary,
-      ),
+      appBar: const CommonAppBar(title: "Settings"),
       body: SafeArea(
         child: Column(
           children: [

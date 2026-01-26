@@ -19,7 +19,7 @@ class PropertyCard extends StatelessWidget {
       width: 180, // ✅ REQUIRED for horizontal list
       margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.background,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(

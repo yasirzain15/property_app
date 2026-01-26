@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:rent_pay/Core/Constants/app_assets.dart';
 import 'package:rent_pay/Utils/global_loader.dart';
+import 'package:rent_pay/Widgets/common_app_bar.dart';
 
 import '../Core/Constants/colors.dart';
 import '../Controller/profile_controller.dart';
@@ -17,44 +19,43 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        centerTitle: true,
-        elevation: 0,
-        title: const Text(
-          "My Profile",
-          style: TextStyle(
-            color: AppColors.background,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        leading: CupertinoButton(
-          padding: EdgeInsets.zero,
-          onPressed: () => Get.back(),
-          child: const Icon(
-            CupertinoIcons.back,
-            color: AppColors.background,
-            size: 26,
-          ),
-        ),
-      ),
+      appBar: const CommonAppBar(title: "My Profile", showBack: true),
 
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              /// 👤 PROFILE IMAGE
+              /// 👤 PROFILE IMAGE (SAFE VERSION)
               Obx(
                 () => GestureDetector(
                   onTap: controller.pickProfileImage,
                   child: CircleAvatar(
                     radius: 60,
                     backgroundColor: AppColors.primary.withOpacity(0.5),
-                    backgroundImage: controller.profileImage.value.isNotEmpty
-                        ? FileImage(File(controller.profileImage.value))
-                        : const AssetImage('assets/images/profile.png')
-                              as ImageProvider,
+                    child: ClipOval(
+                      child: controller.profileImage.value.isNotEmpty
+                          ? Image.file(
+                              File(controller.profileImage.value),
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  AppAssets.profile,
+                                  width: 120,
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            )
+                          : Image.asset(
+                              AppAssets.profile,
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
                   ),
                 ),
               ),

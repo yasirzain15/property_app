@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rent_pay/Utils/global_loader.dart';
+import 'package:rent_pay/Widgets/common_app_bar.dart';
 
 import '../Controller/property_controller.dart';
 import '../Widgets/property_list_card.dart';
@@ -18,24 +19,16 @@ class PropertyListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+
+      /// ✅ SAME APPBAR AS NOTIFICATIONS
+      appBar: const CommonAppBar(title: "All Properties"),
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// ================= TITLE =================
-              const Text(
-                "All Properties",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.black,
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
               /// ================= SEARCH =================
               SearchBarWidget(
                 hint: "Search by location, city, zip",
@@ -63,24 +56,20 @@ class PropertyListView extends StatelessWidget {
 
                         /// 🔹 TAP HANDLER WITH GLOBAL LOADER
                         onTap: () async {
-                          GlobalLoader.show(); // show loader
+                          GlobalLoader.show();
                           try {
-                            // simulate API delay
                             await Future.delayed(const Duration(seconds: 1));
 
-                            // ✅ Navigate to property details
                             Get.toNamed(
                               AppRoutes.propertyDetail,
                               arguments: {
                                 'title': item.title,
                                 'price': item.price,
-                                'images': [
-                                  item.image,
-                                ], // wrap single image in a list
+                                'images': [item.image],
                               },
                             );
                           } finally {
-                            GlobalLoader.hide(); // hide loader
+                            GlobalLoader.hide();
                           }
                         },
                       );
