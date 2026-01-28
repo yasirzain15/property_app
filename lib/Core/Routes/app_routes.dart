@@ -13,4 +13,5 @@ class AppRoutes {
   static const payment = '/payment';
   static const paymentSuccess = '/payment-success';
   static const agencyDetails = '/agency-details';
+  static const projectProperties = '/project-properties';
 }

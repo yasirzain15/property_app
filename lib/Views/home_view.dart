@@ -61,16 +61,15 @@ class HomeView extends StatelessWidget {
     String routeName, {
     dynamic arguments,
   }) async {
-    GlobalLoader.show(); // show loader
+    GlobalLoader.show();
     try {
-      await Future.delayed(const Duration(seconds: 1)); // simulate API delay
+      await Future.delayed(const Duration(seconds: 1));
       Get.toNamed(routeName, arguments: arguments);
     } finally {
-      GlobalLoader.hide(); // hide loader
+      GlobalLoader.hide();
     }
   }
 
-  // ================= HOME CONTENT =================
   // ================= HOME CONTENT =================
   Widget _homeContent() {
     return SingleChildScrollView(
@@ -97,13 +96,12 @@ class HomeView extends StatelessWidget {
           const SizedBox(height: 16),
           _propertyCarousel(),
 
-          const SizedBox(
-            height: 30,
-          ), // ✅ Added spacing between properties and projects
-          ///PROJECTS
+          const SizedBox(height: 30),
+
+          /// 🏗 PROJECTS
           _sectionTitle("Projects"),
-          const SizedBox(height: 16), // ✅ Adjusted spacing for consistency
-          _propertyCarousel(),
+          const SizedBox(height: 16),
+          _projectCarousel(),
         ],
       ),
     );
@@ -114,9 +112,7 @@ class HomeView extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-          onTap: () {
-            navController.changeIndex(3);
-          },
+          onTap: () => navController.changeIndex(3),
           child: const CircleAvatar(
             radius: 22,
             backgroundImage: AssetImage(AppAssets.profile),
@@ -129,13 +125,8 @@ class HomeView extends StatelessWidget {
         ),
         const Spacer(),
         GestureDetector(
-          onTap: () {
-            navController.changeIndex(2);
-          },
-          child: const Icon(
-            Icons.notifications_none,
-            color: AppColors.textSecondary,
-          ),
+          onTap: () => navController.changeIndex(2),
+          child: const Icon(Icons.notifications_none),
         ),
       ],
     );
@@ -152,9 +143,9 @@ class HomeView extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text(
             "Rental\nExplore",
             style: TextStyle(
@@ -176,12 +167,10 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  // ================= SEARCH =================
   Widget _searchField() {
     return const SearchBarWidget(hint: "Address, city, zip");
   }
 
-  // ================= SECTION TITLE =================
   Widget _sectionTitle(String title) {
     return Text(
       title,
@@ -197,16 +186,16 @@ class HomeView extends StatelessWidget {
         image: AppAssets.house1,
         projects: [
           PropertyProjectModel(
+            title: "Twin Towers",
             image: AppAssets.house1,
-            title: "Prime Apartments",
-            beds: "2 Bed",
-            price: "\$2,700,000",
+            beds: "3",
+            price: "\$2,800,000",
           ),
           PropertyProjectModel(
+            title: "Sky Heights",
             image: AppAssets.house2,
-            title: "Luxury Heights",
-            beds: "3 Bed",
-            price: "\$3,200,000",
+            beds: "2",
+            price: "\$2,400,000",
           ),
         ],
       ),
@@ -215,58 +204,54 @@ class HomeView extends StatelessWidget {
         image: AppAssets.house2,
         projects: [
           PropertyProjectModel(
-            image: AppAssets.house3,
             title: "Urban Residency",
-            beds: "2 Bed",
-            price: "\$2,100,000",
+            image: AppAssets.house3,
+            beds: "4",
+            price: "\$3,100,000",
           ),
         ],
       ),
       AgencyModel(
         name: "BridgeFord Properties",
-        image: AppAssets.house4,
+        image: AppAssets.house3,
         projects: [
           PropertyProjectModel(
-            image: AppAssets.house3,
-            title: "BridgeFord Properties",
-            beds: "2 Bed",
-            price: "\$4,100,000",
+            title: "BridgeFord Towers",
+            image: AppAssets.house4,
+            beds: "3",
+            price: "\$3,600,000",
           ),
-        ],
-      ),
-      AgencyModel(
-        name: "Westmoor Estates",
-        image: AppAssets.house1,
-        projects: [
           PropertyProjectModel(
-            image: AppAssets.house2,
-            title: "Westmoor Estates",
-            beds: "3 Bed",
-            price: "\$5,100,000",
+            title: "BridgeFord Villas",
+            image: AppAssets.house1,
+            beds: "5",
+            price: "\$5,200,000",
           ),
         ],
       ),
     ];
 
-    final screenWidth = Get.width;
-    final cardWidth = screenWidth * 0.6; // card width 60% of screen for peek
+    final cardWidth = Get.width * 0.6;
 
     return SizedBox(
       height: 170,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: agencies.length,
-        padding: const EdgeInsets.only(left: 0, right: 16),
-        itemBuilder: (context, index) {
+        padding: const EdgeInsets.only(
+          left: 0,
+          right: 16,
+        ), // left/right padding
+        itemBuilder: (_, index) {
           final agency = agencies[index];
           return Padding(
-            padding: const EdgeInsets.only(right: 12),
+            padding: const EdgeInsets.only(right: 12), // spacing between cards
             child: SizedBox(
               width: cardWidth,
               child: AgencyCard(
-                activeProjects: agency.projects.length,
                 image: agency.image,
                 name: agency.name,
+                activeProjects: agency.projects.length,
                 onTap: () {
                   _navigateWithLoader(
                     AppRoutes.agencyDetails,
@@ -296,27 +281,20 @@ class HomeView extends StatelessWidget {
         "beds": "2 Bed",
         "price": "\$2,890,000",
       },
-      {
-        "image": AppAssets.house3,
-        "title": "Hilltop Terrace",
-        "beds": "4 Bed",
-        "price": "\$2,300,000",
-      },
     ];
 
-    final screenWidth = Get.width;
-    final cardWidth = screenWidth * 0.6; // 60% of screen width for peek
+    final cardWidth = Get.width * 0.6;
 
     return SizedBox(
       height: kCardHeight,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: properties.length,
-        padding: const EdgeInsets.only(left: 0, right: 16),
-        itemBuilder: (context, index) {
+        padding: const EdgeInsets.only(left: 0, right: 16), // carousel padding
+        itemBuilder: (_, index) {
           final item = properties[index];
           return Padding(
-            padding: const EdgeInsets.only(right: 12),
+            padding: const EdgeInsets.only(right: 12), // spacing between cards
             child: SizedBox(
               width: cardWidth,
               child: PropertyCard(
@@ -328,6 +306,62 @@ class HomeView extends StatelessWidget {
                   _navigateWithLoader(
                     AppRoutes.propertyDetail,
                     arguments: item,
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  // ================= PROJECT CAROUSEL =================
+  Widget _projectCarousel() {
+    final projects = [
+      PropertyProjectModel(
+        title: "Sky Towers",
+        image: AppAssets.house1,
+        beds: '3',
+        price: '\$2,890,000',
+      ),
+      PropertyProjectModel(
+        title: 'Twin Towers',
+        beds: '2',
+        price: '\$2,890,000',
+        image: AppAssets.house2,
+      ),
+      PropertyProjectModel(
+        title: "Emerald Heights",
+        image: AppAssets.house3,
+        beds: '4',
+        price: '\$2,890,000',
+      ),
+    ];
+
+    final cardWidth = Get.width * 0.6;
+
+    return SizedBox(
+      height: kCardHeight,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: projects.length,
+        padding: const EdgeInsets.only(left: 0, right: 16), // carousel padding
+        itemBuilder: (_, index) {
+          final project = projects[index];
+          return Padding(
+            padding: const EdgeInsets.only(right: 12), // spacing between cards
+            child: SizedBox(
+              width: cardWidth,
+              child: PropertyCard(
+                image: project.image,
+                title: project.title,
+                beds: "Multiple Units", // keep original project text
+                price: "Starting Soon", // keep original project text
+                onTap: () {
+                  _navigateWithLoader(
+                    AppRoutes.projectProperties,
+                    arguments: project,
                   );
                 },
               ),

@@ -15,6 +15,7 @@ import 'package:rent_pay/Views/installment_view.dart';
 import 'package:rent_pay/Views/notifications_view.dart';
 import 'package:rent_pay/Views/payment_success_view.dart';
 import 'package:rent_pay/Views/payment_view.dart';
+import 'package:rent_pay/Views/project_properties_view.dart';
 import 'package:rent_pay/Views/property_list_view.dart';
 import 'package:rent_pay/Views/property_detail_view.dart';
 import 'package:rent_pay/Views/settings_view.dart';
@@ -105,6 +106,12 @@ class AppPages {
       name: AppRoutes.agencyDetails,
       page: () => AgencyDetailsView(),
       binding: AgencyDetailsBinding(),
+    ),
+
+    ///PROJECT DETAILS
+    GetPage(
+      name: AppRoutes.projectProperties,
+      page: () => const ProjectPropertiesView(),
     ),
   ];
 }
