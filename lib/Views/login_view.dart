@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rent_pay/Controller/auth/login_controller.dart';
 
 import 'package:rent_pay/Core/Constants/colors.dart';
-import 'package:rent_pay/Controller/login_controller.dart';
 import 'package:rent_pay/Widgets/custom_button.dart';
-import 'package:rent_pay/Widgets/custom_textfield.dart';
+import 'package:rent_pay/Widgets/cnic_textfield.dart';
+import 'package:rent_pay/Widgets/custom_textfield.dart'; // ✅ import new CNIC field
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
 
-  /// 🔮 Controller (via Binding)
   final LoginController controller = Get.find<LoginController>();
 
   @override
@@ -51,8 +51,10 @@ class LoginView extends StatelessWidget {
 
               const SizedBox(height: 40),
 
-              /// Email
-              const CustomTextField(hint: "Email address", icon: Icons.email),
+              /// CNIC
+              CnicTextField(
+                controller: controller.nicController,
+              ), // ✅ auto-formatting CNIC
 
               const SizedBox(height: 16),
 
@@ -61,15 +63,11 @@ class LoginView extends StatelessWidget {
                 hint: "Password",
                 isPassword: true,
                 icon: Icons.lock,
-                suffixIcon: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.visibility_off),
-                ),
+                controller: controller.passwordController,
               ),
 
               const SizedBox(height: 10),
 
-              /// Forgot Password
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -84,16 +82,10 @@ class LoginView extends StatelessWidget {
               const SizedBox(height: 16),
 
               /// Login Button
-              CustomButton(
-                title: "Log In",
-                onTap: () {
-                  controller.login(); // ✅ Global loader will show automatically
-                },
-              ),
+              CustomButton(title: "Log In", onTap: controller.login),
 
               const Spacer(),
 
-              /// Sign up
               Center(
                 child: RichText(
                   text: TextSpan(

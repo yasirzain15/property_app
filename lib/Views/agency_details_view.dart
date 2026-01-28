@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:rent_pay/Core/Routes/app_routes.dart';
 import 'package:rent_pay/Widgets/Dashboard/agency_project_card.dart';
 import 'package:rent_pay/Utils/global_loader.dart';
+import 'package:rent_pay/Widgets/common_app_bar.dart';
 
 import '../Controller/agency_details_controller.dart';
 import '../Core/Constants/colors.dart';
@@ -17,26 +18,7 @@ class AgencyDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        elevation: 0,
-        centerTitle: true,
-
-        /// 🍎 iOS BACK BUTTON
-        leading: CupertinoButton(
-          padding: EdgeInsets.zero,
-          onPressed: () => Get.back(),
-          child: const Icon(CupertinoIcons.back, color: Colors.white, size: 28),
-        ),
-
-        title: Text(
-          controller.agency.name,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
+      appBar: CommonAppBar(title: controller.agency.name, showBack: true),
 
       body: Padding(
         padding: const EdgeInsets.all(20),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rent_pay/Core/Constants/colors.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -6,6 +7,10 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final IconData? icon;
   final Widget? suffixIcon;
+  final TextInputType keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+  final int? maxLength;
+  final TextEditingController? controller; // ✅ added
 
   const CustomTextField({
     super.key,
@@ -13,6 +18,10 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.icon,
     this.suffixIcon,
+    this.keyboardType = TextInputType.text,
+    this.inputFormatters,
+    this.maxLength,
+    this.controller, // ✅ added
   });
 
   @override
@@ -33,8 +42,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextField(
+        controller: widget.controller, // ✅ connected
         obscureText: _obscureText,
+        keyboardType: widget.keyboardType,
+        inputFormatters: widget.inputFormatters,
+        maxLength: widget.maxLength,
         decoration: InputDecoration(
+          counterText: "",
           hintText: widget.hint,
           prefixIcon: widget.icon != null
               ? Icon(widget.icon, color: AppColors.primary)
