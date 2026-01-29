@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rent_pay/Core/Constants/api_endpoints.dart';
+import 'package:rent_pay/Core/Constants/colors.dart';
 import 'package:rent_pay/Core/Services/api_service.dart';
 import 'package:rent_pay/Core/Storage/local_storage.dart';
 import 'package:rent_pay/Models/auth/login_response_model.dart';
@@ -41,16 +42,36 @@ class LoginController extends GetxController {
 
         if (model.success) {
           LocalStorage.saveToken(model.data.token);
-          Get.snackbar("Success", model.message);
+          Get.snackbar(
+            "Success",
+            model.message,
+            backgroundColor: AppColors.primary,
+            colorText: AppColors.background,
+          );
           Get.offAllNamed('/home');
         } else {
-          Get.snackbar("Login Failed", model.message);
+          Get.snackbar(
+            "Login Failed",
+            model.message,
+            backgroundColor: Colors.red,
+            colorText: AppColors.background,
+          );
         }
       } else {
-        Get.snackbar("Error", "Invalid server response");
+        Get.snackbar(
+          "Error",
+          "Invalid server response",
+          backgroundColor: Colors.red,
+          colorText: AppColors.background,
+        );
       }
     } catch (e) {
-      Get.snackbar("Exception", e.toString());
+      Get.snackbar(
+        "Exception",
+        backgroundColor: Colors.red,
+        colorText: AppColors.background,
+        e.toString(),
+      );
     } finally {
       GlobalLoader.hide();
     }
