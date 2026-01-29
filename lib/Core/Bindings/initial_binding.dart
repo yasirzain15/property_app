@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../Core/Services/api_service.dart';
 import '../../Controller/auth/login_controller.dart';
+import '../../Controller/auth/logout_controller.dart';
 import '../../Controller/bottom_nav_controller.dart';
 import '../../Controller/property_controller.dart';
 import '../../Controller/profile_controller.dart';
@@ -26,5 +27,9 @@ class InitialBinding extends Bindings {
     /// 🔐 Login Controller
     /// Created only when LoginView is used
     Get.lazyPut<LoginController>(() => LoginController());
+
+    /// 🚪 Logout Controller
+    /// App-wide but lightweight
+    Get.lazyPut<LogoutController>(() => LogoutController(), fenix: true);
   }
 }
