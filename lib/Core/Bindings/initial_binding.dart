@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:rent_pay/Controller/update_profile_controller.dart';
 
 import '../../Core/Services/api_service.dart';
 import '../../Controller/auth/login_controller.dart';
@@ -31,5 +32,11 @@ class InitialBinding extends Bindings {
     /// 🚪 Logout Controller
     /// App-wide but lightweight
     Get.lazyPut<LogoutController>(() => LogoutController(), fenix: true);
+
+    ///UPDATE PROFILE
+    Get.lazyPut<UpdateProfileController>(
+      () => UpdateProfileController(),
+      fenix: true,
+    );
   }
 }

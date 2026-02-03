@@ -1,15 +1,16 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
-import '../../Core/Services/api_service.dart';
-import '../../Core/Constants/api_endpoints.dart';
-import '../../Models/profile_model.dart';
-import '../../Utils/global_loader.dart';
+import '../Core/Services/api_service.dart';
+import '../Core/Constants/api_endpoints.dart';
+import '../Models/profile_model.dart';
+import '../Controller/global_loader_controller.dart';
 
 class ProfileController extends GetxController {
   final ApiService _api = Get.find<ApiService>();
+  final GlobalLoaderController loader = Get.find<GlobalLoaderController>();
 
   Rx<ProfileData?> profile = Rx<ProfileData?>(null);
   RxString errorMessage = ''.obs;
@@ -28,19 +29,20 @@ class ProfileController extends GetxController {
   RxList<String> documents = <String>[].obs;
 
   @override
-  void onReady() {
-    super.onReady();
+  void onInit() {
+    super.onInit();
     print("🚀 ProfileController Ready");
-    fetchProfile();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchProfile();
+    });
   }
 
-  // ===================== FETCH PROFILE =====================
+  // ================= FETCH PROFILE =================
   Future<void> fetchProfile() async {
-    print("🔹 Fetch Profile Start");
-
     try {
-      GlobalLoader.show();
-      errorMessage.value = '';
+      loader.show();
+      print("🔹 Fetch Profile Start");
 
       final response = await _api.getRequest(ApiEndpoints.profile);
 
@@ -51,28 +53,25 @@ class ProfileController extends GetxController {
         final model = ProfileResponseModel.fromJson(response.body);
         profile.value = model.data;
 
+        _fillProfile();
         print("✅ Profile Loaded");
-
-        _fillProfileData(); // ✅ SAFE NOW
       } else {
-        errorMessage.value =
-            response.body['message'] ?? "Failed to load profile";
-        print("❌ API Failed");
+        errorMessage.value = "Failed to load profile";
       }
     } catch (e) {
       errorMessage.value = "Something went wrong";
-      print("❌ Error: $e");
+      print("❌ ERROR: $e");
     } finally {
-      GlobalLoader.hide();
+      loader.hide();
       print("🔹 Fetch Completed");
     }
   }
 
-  // ===================== FILL DATA =====================
-  void _fillProfileData() {
-    if (profile.value == null) return;
+  // ================= FILL UI =================
+  void _fillProfile() {
+    final data = profile.value;
+    if (data == null) return;
 
-    final data = profile.value!;
     print("📦 Filling UI...");
 
     nameController.text = data.name ?? '';
@@ -83,97 +82,67 @@ class ProfileController extends GetxController {
     dobController.text = data.dob ?? '';
     gender.value = data.gender ?? '';
 
-    addresses.assignAll(
-      data.customerAddresses?.map((e) => e.address ?? '').toList() ?? [],
-    );
+    profileImage.value = data.profileImage ?? '';
 
-    documents.assignAll(
-      data.customerDocuments?.map((e) => e.filePath ?? '').toList() ?? [],
-    );
+    addresses.clear();
+    documents.clear();
 
-    print("🏠 Addresses: ${addresses.length}");
-    print("📄 Documents: ${documents.length}");
-  }
+    if (data.customerAddresses != null) {
+      for (var a in data.customerAddresses!) {
+        if (a.address != null && a.address!.isNotEmpty) {
+          addresses.add(a.address!);
+        }
+      }
+    }
 
-  // ===================== IMAGE PICK =====================
-  Future<void> pickProfileImage() async {
-    final picker = ImagePicker();
-    final XFile? file = await picker.pickImage(source: ImageSource.gallery);
-
-    if (file != null) {
-      profileImage.value = file.path;
-      print("🖼 Image Selected");
+    if (data.customerDocuments != null) {
+      for (var d in data.customerDocuments!) {
+        if (d.filePath != null && d.filePath!.isNotEmpty) {
+          documents.add(d.filePath!);
+        }
+      }
     }
   }
 
-  // ===================== ADD ADDRESS =====================
+  // ================= PICK PROFILE IMAGE =================
+  Future<void> pickProfileImage() async {
+    final picker = ImagePicker();
+    final file = await picker.pickImage(source: ImageSource.gallery);
+
+    if (file != null) {
+      profileImage.value = file.path;
+      print("🖼 Image Picked: ${file.path}");
+    }
+  }
+
+  // ================= ADD ADDRESS =================
   void addAddressDialog() {
-    final addressController = TextEditingController();
+    final text = TextEditingController();
 
     Get.defaultDialog(
       title: "Add Address",
-      content: TextField(controller: addressController),
+      content: TextField(
+        controller: text,
+        decoration: const InputDecoration(hintText: "Enter address"),
+      ),
       textConfirm: "Add",
+      textCancel: "Cancel",
       onConfirm: () {
-        if (addressController.text.isNotEmpty) {
-          addresses.add(addressController.text);
-          print("🏠 Address Added");
+        if (text.text.trim().isNotEmpty) {
+          addresses.add(text.text.trim());
         }
         Get.back();
       },
     );
   }
 
-  // ===================== PICK DOCUMENT =====================
+  // ================= PICK DOCUMENT =================
   Future<void> pickDocumentFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'png', 'jpeg', 'pdf'],
-    );
+    final result = await FilePicker.platform.pickFiles();
 
-    if (result != null) {
+    if (result != null && result.files.single.path != null) {
       documents.add(result.files.single.path!);
-      print("📄 Document Added");
+      print("📄 Document Added: ${result.files.single.path}");
     }
-  }
-
-  // ===================== UPDATE PROFILE =====================
-  Future<void> updateProfile() async {
-    try {
-      GlobalLoader.show();
-
-      final body = {
-        "name": nameController.text.trim(),
-        "f_or_h_name": fatherNameController.text.trim(),
-        "email": emailController.text.trim(),
-        "nic": cnicController.text.trim(),
-        "mobile_no": phoneController.text.trim(),
-        "gender": gender.value,
-        "dob": dobController.text.trim(),
-        "addresses": addresses.toList(),
-      };
-
-      print("📦 Update Body: $body");
-
-      Get.snackbar("Success", "Profile updated");
-      print("✅ Update Done");
-    } catch (e) {
-      print("❌ Update Error: $e");
-      Get.snackbar("Error", "Update Failed");
-    } finally {
-      GlobalLoader.hide();
-    }
-  }
-
-  @override
-  void onClose() {
-    nameController.dispose();
-    fatherNameController.dispose();
-    emailController.dispose();
-    cnicController.dispose();
-    phoneController.dispose();
-    dobController.dispose();
-    print("🧹 Controller Closed");
-    super.onClose();
   }
 }
