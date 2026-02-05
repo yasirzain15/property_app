@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Rent Pay',
+      title: 'Property App',
 
       /// 🌍 REQUIRED FOR Directionality SAFETY
       locale: const Locale('en', 'US'),
